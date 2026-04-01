@@ -1,21 +1,59 @@
 pipeline {
     agent any
 
+    environment {
+        REMOTE_HOST = "172.31.8.108"
+        REMOTE_USER = "ec2-user"
+    }
+
     stages {
-        stage('Clone') {
+
+        stage('Clone Repository') {
             steps {
                 git 'https://github.com/gowda-m/aws-devops-projects.git'
             }
         }
 
-        stage('Deploy') {
+        stage('Verify Files') {
             steps {
                 sh '''
-                ssh -o StrictHostKeyChecking=no -i ~/jenkins-key.pem ec2-user@172.31.8.108 << EOF
-                sudo cp ec2-ci-cd-jenkins-docker/index.html /var/www/html/
-                EOF
+                echo "Listing files..."
+                ls -l
+                ls -l ec2-ci-cd-jenkins-docker/
                 '''
             }
+        }
+
+        stage('Deploy to Apache EC2') {
+            steps {
+                sshagent(['apache-ec2-key']) {
+                    sh '''
+                    echo "Deploying to Apache Server..."
+
+                    ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST << EOF
+                    sudo cp ec2-ci-cd-jenkins-docker/index.html /var/www/html/
+                    sudo systemctl restart httpd
+                    EOF
+                    '''
+                }
+            }
+        }
+
+        stage('Verify Deployment') {
+            steps {
+                sh '''
+                echo "Deployment completed successfully!"
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+            echo '✅ CI/CD Pipeline executed successfully!'
+        }
+        failure {
+            echo '❌ Pipeline failed. Check logs.'
         }
     }
 }
