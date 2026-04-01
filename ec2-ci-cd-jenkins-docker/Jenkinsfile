@@ -4,13 +4,17 @@ pipeline {
     stages {
         stage('Clone') {
             steps {
-                git 'https://github.com/<username>/repo.git'
+                git 'https://github.com/gowda-m/aws-devops-projects.git'
             }
         }
 
         stage('Deploy') {
             steps {
-                sh 'sudo cp index.html /var/www/html/'
+                sh '''
+                ssh -o StrictHostKeyChecking=no -i ~/jenkins-key.pem ec2-user@172.31.8.108 << EOF
+                sudo cp ec2-ci-cd-jenkins-docker/index.html /var/www/html/
+                EOF
+                '''
             }
         }
     }
