@@ -1,22 +1,16 @@
 pipeline {
-    agent any   // uses any available executor, including your online EC2 agent
+    agent any
 
     stages {
-        stage('Hello') {
+        stage('Test') {
             steps {
-                echo 'Hello from Jenkins!'
+                echo 'Running CI/CD pipeline'
+                sh 'whoami'
+                sh 'pwd'
             }
         }
 
-        stage('Check Node') {
-            steps {
-                sh 'whoami'       // prints the user running the job
-                sh 'pwd'          // prints current directory
-                sh 'ls -l'        // lists files in workspace
-            }
-        }
-
-        stage('Test Deploy') {
+        stage('Deploy') {
             steps {
                 sh '''
                     echo "<h1>CI/CD Test Success</h1>" > index.html
@@ -28,7 +22,7 @@ pipeline {
 
     post {
         always {
-            echo 'Pipeline finished.'
+            echo 'Pipeline completed'
         }
     }
 }
