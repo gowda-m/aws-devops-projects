@@ -2,7 +2,9 @@ pipeline {
     agent any
 
     environment {
-        APP_DIR = "${WORKSPACE}/ec2-ci-cd-jenkins-docker"
+        APP_DIR = "${WORKSPACE}/ec2-ci-cd-jenkins-docker"  // path to your repo folder
+        IMAGE_NAME = "my-static-site:latest"
+        CONTAINER_NAME = "static-site"
     }
 
     stages {
@@ -13,48 +15,41 @@ pipeline {
             }
         }
 
-        stage('Check Files') {
-            steps {
-                echo "Listing repo contents:"
-                sh "ls -l ${APP_DIR}"
-            }
-        }
-
-        stage('Deploy to Apache') {
-            steps {
-                echo "Deploying index.html to Apache..."
-                sh """
-                    sudo cp ${APP_DIR}/index.html /var/www/html/
-                    sudo chown apache:apache /var/www/html/index.html
-                """
-            }
-        }
-
-        stage('Optional: Build Docker') {
+        stage('Build Docker Image') {
             steps {
                 echo "Building Docker image..."
                 sh """
                     cd ${APP_DIR}
-                    sudo docker build -t my-static-site:latest .
+                    sudo docker build -t ${IMAGE_NAME} .
                 """
             }
         }
 
-        stage('Optional: Run Container') {
+        stage('Run Docker Container') {
             steps {
                 echo "Running Docker container..."
                 sh """
-                    sudo docker stop my-static-site || true
-                    sudo docker rm my-static-site || true
-                    sudo docker run -d --name my-static-site -p 80:80 my-static-site:latest
+                    # Stop and remove previous container if exists
+                    sudo docker stop ${CONTAINER_NAME} || true
+                    sudo docker rm ${CONTAINER_NAME} || true
+
+                    # Run new container
+                    sudo docker run -d -p 80:80 --name ${CONTAINER_NAME} ${IMAGE_NAME}
                 """
+            }
+        }
+
+        stage('Verify Deployment') {
+            steps {
+                echo "Deployment complete. Check via browser at http://<EC2-Public-IP>"
+                sh "sudo docker ps"
             }
         }
     }
 
     post {
         always {
-            echo "Pipeline finished!"
+            echo "Containerized website pipeline finished!"
         }
     }
 }
