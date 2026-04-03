@@ -23,9 +23,6 @@ This project demonstrates a complete CI/CD pipeline using AWS, Jenkins, and Dock
 * Name: `jenkins-user`
 * Attach policy: `AdministratorAccess`
 
----
-![IAM_user](Images/IAM_user.png.png)
-
 ![IAM_user](Images/IAM_user.png)
 
 ---
