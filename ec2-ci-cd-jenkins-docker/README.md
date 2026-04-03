@@ -25,7 +25,8 @@ This project demonstrates a complete CI/CD pipeline using AWS, Jenkins, and Dock
 
 ---
 ![IAM_user](Images/IAM_user.png.png)
-![IAM_user](ec2-ci-cd-jenkins-docker/Images/IAM_user.png)
+
+![IAM_user](Images/IAM_user.png)
 
 ---
 
