@@ -2,37 +2,24 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
+        stage('Clone') {
             steps {
-                echo 'Checking out repo...'
-                checkout scm
+                git credentialsId: 'github-creds', url: 'https://github.com/<username>/repo.git'
             }
         }
 
-        stage('Test') {
+        stage('Build Docker Image') {
             steps {
-                echo 'Verifying workspace'
-                sh 'ls -l'
+                sh 'docker build -t my-static-site:latest .'
             }
         }
 
-        stage('Deploy') {
+        stage('Run Container') {
             steps {
-                sh '''
-                    echo "Deploying repo index.html to Apache..."
-                    # Adjust the path if your index.html is inside a folder
-                    sudo cp ec2-ci-cd-jenkins-docker/index.html /var/www/html/
-                    echo "Deployed file details:"
-                    ls -l /var/www/html/
-                    echo "Deployed file content:"
-                    cat /var/www/html/index.html
-                '''
+                sh 'docker stop static-site || true'
+                sh 'docker rm static-site || true'
+                sh 'docker run -d -p 80:80 --name static-site my-static-site:latest'
             }
         }
-    }
-
-    post {
-        success { echo 'Deployment finished successfully' }
-        failure { echo 'Deployment failed' }
     }
 }
