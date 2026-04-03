@@ -7,13 +7,15 @@ pipeline {
                 echo 'Running CI/CD pipeline'
                 sh 'whoami'
                 sh 'pwd'
+                sh 'ls -l'
             }
         }
 
         stage('Deploy') {
             steps {
                 sh '''
-                    echo "<h1>CI/CD Test Success</h1>" > index.html
+                    echo "Deploying existing index.html to Apache..."
+                    # copy index.html from repo (workspace) to /var/www/html
                     sudo cp index.html /var/www/html/
                 '''
             }
@@ -21,8 +23,11 @@ pipeline {
     }
 
     post {
-        always {
-            echo 'Pipeline completed'
+        success {
+            echo 'Deployment successful!'
+        }
+        failure {
+            echo 'Deployment failed!'
         }
     }
 }
