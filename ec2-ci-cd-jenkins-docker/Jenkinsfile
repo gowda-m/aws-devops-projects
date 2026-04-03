@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Clone') {
             steps {
-                git credentialsId: 'github-creds', url: 'https://github.com/<username>/repo.git'
+                git credentialsId: 'github-creds', url: 'https://github.com/gowda-m/aws-devops-projects.git'
             }
         }
 
