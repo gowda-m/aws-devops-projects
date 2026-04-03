@@ -1,33 +1,8 @@
 pipeline {
     agent any
-
     stages {
         stage('Test') {
-            steps {
-                echo 'Running CI/CD pipeline'
-                sh 'whoami'
-                sh 'pwd'
-                sh 'ls -l'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                sh '''
-                    echo "Deploying repo index.html to Apache..."
-                    # Copy the index.html from repo directly
-                    sudo cp ec2-ci-cd-jenkins-docker/index.html /var/www/html/
-                '''
-            }
-        }
-    }
-
-    post {
-        success {
-            echo 'Deployment successful!'
-        }
-        failure {
-            echo 'Deployment failed!'
+            steps { echo "Hello Jenkins" }
         }
     }
 }
