@@ -14,9 +14,9 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh '''
-                    echo "Deploying existing index.html to Apache..."
-                    # copy index.html from repo (workspace) to /var/www/html
-                    sudo cp index.html /var/www/html/
+                    echo "Deploying repo index.html to Apache..."
+                    # Copy the index.html from repo directly
+                    sudo cp ec2-ci-cd-jenkins-docker/index.html /var/www/html/
                 '''
             }
         }
