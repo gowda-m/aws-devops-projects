@@ -163,7 +163,8 @@ Add Credentials and Configure Node (Agent)
 - Node status should show **Online**
 
  
-![node_added](Images/node_added.png)
+![node_added](Images/Node_added.png)
+
 
 ---
 
