@@ -1,25 +1,60 @@
 pipeline {
     agent any
 
+    environment {
+        APP_DIR = "${WORKSPACE}/ec2-ci-cd-jenkins-docker"
+    }
+
     stages {
-        stage('Clone') {
+        stage('Clone Repo') {
             steps {
-                git credentialsId: 'github-creds', url: 'https://github.com/gowda-m/aws-devops-projects.git'
+                echo "Cloning public GitHub repo..."
+                git url: 'https://github.com/gowda-m/aws-devops-projects.git', branch: 'main'
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Check Files') {
             steps {
-                sh 'docker build -t my-static-site:latest .'
+                echo "Listing repo contents:"
+                sh "ls -l ${APP_DIR}"
             }
         }
 
-        stage('Run Container') {
+        stage('Deploy to Apache') {
             steps {
-                sh 'docker stop static-site || true'
-                sh 'docker rm static-site || true'
-                sh 'docker run -d -p 80:80 --name static-site my-static-site:latest'
+                echo "Deploying index.html to Apache..."
+                sh """
+                    sudo cp ${APP_DIR}/index.html /var/www/html/
+                    sudo chown apache:apache /var/www/html/index.html
+                """
             }
+        }
+
+        stage('Optional: Build Docker') {
+            steps {
+                echo "Building Docker image..."
+                sh """
+                    cd ${APP_DIR}
+                    sudo docker build -t my-static-site:latest .
+                """
+            }
+        }
+
+        stage('Optional: Run Container') {
+            steps {
+                echo "Running Docker container..."
+                sh """
+                    sudo docker stop my-static-site || true
+                    sudo docker rm my-static-site || true
+                    sudo docker run -d --name my-static-site -p 80:80 my-static-site:latest
+                """
+            }
+        }
+    }
+
+    post {
+        always {
+            echo "Pipeline finished!"
         }
     }
 }
