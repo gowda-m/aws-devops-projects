@@ -1,8 +1,38 @@
 pipeline {
     agent any
+
     stages {
-        stage('Test') {
-            steps { echo "Hello Jenkins" }
+        stage('Checkout') {
+            steps {
+                echo 'Checking out repo...'
+                checkout scm
+            }
         }
+
+        stage('Test') {
+            steps {
+                echo 'Verifying workspace'
+                sh 'ls -l'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh '''
+                    echo "Deploying repo index.html to Apache..."
+                    # Adjust the path if your index.html is inside a folder
+                    sudo cp ec2-ci-cd-jenkins-docker/index.html /var/www/html/
+                    echo "Deployed file details:"
+                    ls -l /var/www/html/
+                    echo "Deployed file content:"
+                    cat /var/www/html/index.html
+                '''
+            }
+        }
+    }
+
+    post {
+        success { echo 'Deployment finished successfully' }
+        failure { echo 'Deployment failed' }
     }
 }
