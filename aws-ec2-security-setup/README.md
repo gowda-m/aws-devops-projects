@@ -1,4 +1,4 @@
-# AWS EC2 Security Setup (Step 1 → Step 8)
+# AWS EC2 Security Setup
 
 ---
 
