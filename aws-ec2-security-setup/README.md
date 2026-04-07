@@ -127,7 +127,7 @@ Connection timed out
 Then i able to SSH
 ---
 
-## Step 6: Install Apache (Optional)
+## Step 6: Install Apache
 
 ### Commands:
 
@@ -147,7 +147,7 @@ http://<PUBLIC-IP>
 
 ---
 
-## Step 7: User Management (Optional)
+## Step 7: User Management
 
 ### Commands:
 
