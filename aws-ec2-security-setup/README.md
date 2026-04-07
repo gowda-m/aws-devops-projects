@@ -124,6 +124,7 @@ Connection timed out
 
 ![SSH Restored](Images/ssh-restored.png)
 
+Then i able to SSH
 ---
 
 ## Step 6: Install Apache (Optional)
