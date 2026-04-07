@@ -194,5 +194,3 @@ sudo systemctl restart sshd
 * Configured firewall rules using Security Groups
 * Tested real-world access restriction scenario
 * Improved instance security with SSH hardening
-
----
