@@ -1,73 +1,206 @@
-# 🔐 AWS EC2 Security Setup
+# 🔐 AWS EC2 Security Setup (Step 1 → Step 8)
 
 ---
 
 ## 📌 Objective
 
-This project demonstrates how to securely configure and access an AWS EC2 instance using:
+Secure an AWS EC2 instance using:
 
-- Key Pair Authentication
-- Security Groups (Firewall Rules)
-- SSH Access Control
-- Basic System Hardening
-
----
-
-## 🛠️ Services Used
-
-- AWS EC2
-- Security Groups
-- Key Pairs
-- Linux (Amazon Linux)
-- SSH
+* Key Pair authentication
+* Security Groups (firewall rules)
+* SSH access control
+* Basic system hardening
 
 ---
 
-## 🔑 Step 1: Key Pair Creation
+## 🔐 Step 1: Key Pair Creation
 
-- Created a secure RSA key pair named `devops-key`
-- Used `.pem` file for SSH authentication
+### Steps:
+
+* Go to **EC2 → Key Pairs**
+* Click **Create Key Pair**
+* Name: `devops-key`
+* Type: RSA
+* Download `.pem` file
+
+### Command (set permission):
+
+```bash
+chmod 400 devops-key.pem
+```
 
 📸 Screenshot:
-
 ![Key Pair](Images/keypair.png)
 
 ---
 
-## 🚀 Step 2: EC2 Instance Launch
+## 🚀 Step 2: Launch EC2 Instance
 
-- Launched EC2 instance (`t2.micro`)
-- Selected Amazon Linux AMI
-- Attached key pair for secure login
+### Steps:
+
+* Go to **EC2 → Instances → Launch Instance**
+* Name: `devops-server`
+* AMI: Amazon Linux
+* Instance type: `t2.micro`
+* Select key pair: `devops-key`
+
+### Security Group Rules:
+
+| Type | Port | Source    |
+| ---- | ---- | --------- |
+| SSH  | 22   | My IP     |
+| HTTP | 80   | 0.0.0.0/0 |
 
 📸 Screenshot:
-
 ![EC2 Instance](Images/ec2-instance.png)
 
 ---
 
 ## 🌐 Step 3: Security Group Configuration
 
-Configured inbound rules:
+### Steps:
 
-| Type | Port | Source |
-|------|------|--------|
-| SSH  | 22   | My IP |
-| HTTP | 80   | 0.0.0.0/0 |
+* Go to **Security Groups**
+* Edit inbound rules
 
-🔒 Security Best Practice:
-- Restricted SSH access to specific IP
-- Avoided open SSH access (0.0.0.0/0)
+### Rules:
+
+* SSH (22) → My IP
+* HTTP (80) → Anywhere
+
+🔒 Best Practice:
+
+* Avoid SSH from `0.0.0.0/0`
 
 📸 Screenshot:
-
 ![Security Group](Images/security-group.png)
 
 ---
 
 ## 🔗 Step 4: SSH Access
 
-Connected to EC2 instance using:
+### Command:
 
 ```bash
 ssh -i devops-key.pem ec2-user@<PUBLIC-IP>
+```
+
+### Expected Output:
+
+```bash
+ec2-user@ip-xxx:~$
+```
+
+📸 Screenshot:
+![SSH Success](Images/ssh-success.png)
+
+---
+
+## 🔥 Step 5: Security Validation (Access Test)
+
+### ❌ Remove SSH Rule
+
+* Remove port 22 from Security Group
+
+📸 Screenshot:
+![SSH Removed](Images/ssh-removed.png)
+
+---
+
+### ❌ Try SSH Again
+
+```bash
+ssh -i devops-key.pem ec2-user@<PUBLIC-IP>
+```
+
+Expected:
+
+```bash
+Connection timed out
+```
+
+📸 Screenshot:
+![SSH Failed](Images/ssh-failed.png)
+
+---
+
+### ✅ Restore SSH Access
+
+* Add SSH rule back (My IP)
+
+📸 Screenshot:
+![SSH Restored](Images/ssh-restored.png)
+
+---
+
+## 🌍 Step 6: Install Apache (Optional)
+
+### Commands:
+
+```bash
+sudo yum install httpd -y
+sudo systemctl start httpd
+sudo systemctl enable httpd
+```
+
+### Access in browser:
+
+```
+http://<PUBLIC-IP>
+```
+
+📸 Screenshot:
+![Apache](Images/apache.png)
+
+---
+
+## 👤 Step 7: User Management (Optional)
+
+### Commands:
+
+```bash
+sudo adduser devops
+sudo usermod -aG wheel devops
+```
+
+### Verify:
+
+```bash
+id devops
+```
+
+📸 Screenshot:
+![User](Images/user.png)
+
+---
+
+## 🔐 Step 8: SSH Hardening
+
+### Edit SSH Config:
+
+```bash
+sudo vi /etc/ssh/sshd_config
+```
+
+### Update:
+
+```
+PasswordAuthentication no
+```
+
+### Restart SSH:
+
+```bash
+sudo systemctl restart sshd
+```
+
+---
+
+## 🎯 Outcome
+
+* Secure EC2 access using key-based authentication
+* Configured firewall rules using Security Groups
+* Tested real-world access restriction scenario
+* Improved instance security with SSH hardening
+
+---
