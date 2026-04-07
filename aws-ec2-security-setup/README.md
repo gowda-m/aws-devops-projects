@@ -1,8 +1,8 @@
-# 🔐 AWS EC2 Security Setup (Step 1 → Step 8)
+# AWS EC2 Security Setup (Step 1 → Step 8)
 
 ---
 
-## 📌 Objective
+## Objective
 
 Secure an AWS EC2 instance using:
 
@@ -13,7 +13,7 @@ Secure an AWS EC2 instance using:
 
 ---
 
-## 🔐 Step 1: Key Pair Creation
+## Step 1: Key Pair Creation
 
 ### Steps:
 
@@ -29,12 +29,11 @@ Secure an AWS EC2 instance using:
 chmod 400 devops-key.pem
 ```
 
-📸 Screenshot:
 ![Key Pair](Images/keypair.png)
 
 ---
 
-## 🚀 Step 2: Launch EC2 Instance
+## Step 2: Launch EC2 Instance
 
 ### Steps:
 
@@ -51,12 +50,11 @@ chmod 400 devops-key.pem
 | SSH  | 22   | My IP     |
 | HTTP | 80   | 0.0.0.0/0 |
 
-📸 Screenshot:
 ![EC2 Instance](Images/ec2-instance.png)
 
 ---
 
-## 🌐 Step 3: Security Group Configuration
+## Step 3: Security Group Configuration
 
 ### Steps:
 
@@ -68,16 +66,15 @@ chmod 400 devops-key.pem
 * SSH (22) → My IP
 * HTTP (80) → Anywhere
 
-🔒 Best Practice:
+Best Practice:
 
 * Avoid SSH from `0.0.0.0/0`
 
-📸 Screenshot:
 ![Security Group](Images/security-group.png)
 
 ---
 
-## 🔗 Step 4: SSH Access
+##  Step 4: SSH Access
 
 ### Command:
 
@@ -91,23 +88,21 @@ ssh -i devops-key.pem ec2-user@<PUBLIC-IP>
 ec2-user@ip-xxx:~$
 ```
 
-📸 Screenshot:
 ![SSH Success](Images/ssh-success.png)
 
 ---
 
-## 🔥 Step 5: Security Validation (Access Test)
+## Step 5: Security Validation (Access Test)
 
-### ❌ Remove SSH Rule
+### Remove SSH Rule
 
 * Remove port 22 from Security Group
 
-📸 Screenshot:
 ![SSH Removed](Images/ssh-removed.png)
 
 ---
 
-### ❌ Try SSH Again
+### Try SSH Again
 
 ```bash
 ssh -i devops-key.pem ec2-user@<PUBLIC-IP>
@@ -119,21 +114,19 @@ Expected:
 Connection timed out
 ```
 
-📸 Screenshot:
 ![SSH Failed](Images/ssh-failed.png)
 
 ---
 
-### ✅ Restore SSH Access
+### Restore SSH Access
 
 * Add SSH rule back (My IP)
 
-📸 Screenshot:
 ![SSH Restored](Images/ssh-restored.png)
 
 ---
 
-## 🌍 Step 6: Install Apache (Optional)
+## Step 6: Install Apache (Optional)
 
 ### Commands:
 
@@ -149,12 +142,11 @@ sudo systemctl enable httpd
 http://<PUBLIC-IP>
 ```
 
-📸 Screenshot:
 ![Apache](Images/apache.png)
 
 ---
 
-## 👤 Step 7: User Management (Optional)
+## Step 7: User Management (Optional)
 
 ### Commands:
 
@@ -169,14 +161,14 @@ sudo usermod -aG wheel devops
 id devops
 ```
 
-📸 Screenshot:
 ![User](Images/user.png)
 
 ---
 
-## 🔐 Step 8: SSH Hardening
+## Step 8: SSH Hardening
 
 ### Edit SSH Config:
+It reduces attack surface and makes your server much harder to break
 
 ```bash
 sudo vi /etc/ssh/sshd_config
@@ -196,7 +188,7 @@ sudo systemctl restart sshd
 
 ---
 
-## 🎯 Outcome
+## Outcome
 
 * Secure EC2 access using key-based authentication
 * Configured firewall rules using Security Groups
