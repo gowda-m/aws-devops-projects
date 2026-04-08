@@ -27,16 +27,14 @@ This represents **real-world use cases** like backup, scaling, and environment r
 
 Use an existing EC2 instance (Amazon Linux recommended).
 
-Create a test file to verify cloning:
+EC2 instance running + Public IP
+![running-ec2](Images/running-ec2.png)
+
+Able to ssh and Create a test file to verify cloning:
 
 ```bash
 echo "AMI Test Successful" > /home/ec2-user/test.txt
 ```
-
-EC2 instance running + Public IP
-![running-ec2](Images/running-ec2.png)
-
-able to ssh and creating file
 ![EC2 Instance](Images/ec2-instance.png)
 
 ---
