@@ -13,7 +13,7 @@
 - 
 ---
 
-## STEP 1 — Launch EC2 (If not already)
+## STEP 1 — Launch EC2 
 
 - Use **Amazon Linux / Ubuntu**
 - Instance type: `t2.micro` 
