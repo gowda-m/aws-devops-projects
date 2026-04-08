@@ -72,13 +72,9 @@ It should now be replaced with the Elastic IP
 
 ---
 
-## STEP 6 — Reboot Instance or
+## STEP 6 — After Reboot Instance or
 
-1. Stop the EC2 instance
-2. Start the instance again
-
-Normal Public IP changes ❌
-Elastic IP remains same ✅
+Elastic IP remains same
 
 ![EIP Persistence](Images/eip-persistence.png)
 
