@@ -49,6 +49,9 @@ This lab demonstrates **practical AWS storage skills**.
 📸 Screenshot 3: Volume attached  
 ![Volume Attached](Images/ebs-attached.png)
 
+can see and manage it inside EC2 → EBS → Volumes in the AWS Console storage
+
+![ebs-storage-gui](Images/ebs-storage-gui.png)
 ---
 
 ## 🔹 STEP 4 — Connect via SSH
@@ -63,13 +66,13 @@ ssh -i devops-key.pem ec2-user@<PUBLIC-IP>
 lsblk
 
 # Create filesystem (first time only)
-sudo mkfs -t ext4 /dev/xvdf
+sudo mkfs -t ext4 /dev/sdf
 
 # Create mount point
 sudo mkdir /mnt/ebs
 
 # Mount volume
-sudo mount /dev/xvdf /mnt/ebs
+sudo mount /dev/sdf /mnt/ebs
 
 # Verify
 df -h
@@ -103,7 +106,7 @@ Mount again:
 
 **Reattach Volume**
 ```
-sudo mount /dev/xvdf /mnt/ebs
+sudo mount /dev/sdf /mnt/ebs
 ls -l /mnt/ebs
 ```
 ![ebs-file-persist](Images/ebs-file-persist.png)
