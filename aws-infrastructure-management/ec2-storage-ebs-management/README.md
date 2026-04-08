@@ -4,17 +4,13 @@
 
 ## Objective
 
-Hands-on lab for managing AWS EBS volumes:
-
 - Create EBS volume
 - Attach it to an EC2 instance
 - Mount and verify volume
 - Add test file
 - Take snapshot
 - Detach & reattach volume to verify persistence
-
-This lab demonstrates **practical AWS storage skills**.
-
+- 
 ---
 
 ## STEP 1 — Launch EC2 (If not already)
