@@ -72,7 +72,7 @@ able to ssh and creating file
 
 ## STEP 5 — Verify Cloned Data
 
-Connect to the new instance:
+Connect to the new instance (AMI):
 
 ```bash
 ssh -i devops-key.pem ec2-user@<NEW-PUBLIC-IP>
@@ -80,17 +80,6 @@ ssh -i devops-key.pem ec2-user@<NEW-PUBLIC-IP>
 
 Verify the test file:
 
-```bash
-cat /home/ec2-user/test.txt
-```
-
-Expected output:
-
-```bash
-AMI Test Successful
-```
-
-Data verification
 ![Data Verified](Images/ami-data-verified.png)
 
 ---
