@@ -10,7 +10,8 @@
 - Add test file
 - Take snapshot
 - Detach & reattach volume to verify persistence
-- 
+
+
 ---
 
 ## STEP 1 — Launch EC2 
