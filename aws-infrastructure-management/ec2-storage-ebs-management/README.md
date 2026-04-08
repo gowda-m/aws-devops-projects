@@ -1,8 +1,8 @@
-# 💾 EC2 Storage — EBS Management
+# EC2 Storage — EBS Management
 
 ---
 
-## 📌 Objective
+## Objective
 
 Hands-on lab for managing AWS EBS volumes:
 
@@ -17,18 +17,18 @@ This lab demonstrates **practical AWS storage skills**.
 
 ---
 
-## 🔹 STEP 1 — Launch EC2 (If not already)
+## STEP 1 — Launch EC2 (If not already)
 
 - Use **Amazon Linux / Ubuntu**
-- Instance type: `t2.micro` (free tier)
+- Instance type: `t2.micro` 
 - Security Group: SSH (22) → My IP
 
-📸 Screenshot 1: EC2 instance running + Public IP  
+EC2 instance running + Public IP  
 ![EC2 Instance](Images/ec2-instance.png)
 
 ---
 
-## 🔹 STEP 2 — Create EBS Volume
+## STEP 2 — Create EBS Volume
 
 1. Go to **EC2 → Volumes → Create Volume**
 2. Fill details:  
@@ -40,13 +40,13 @@ This lab demonstrates **practical AWS storage skills**.
 
 ---
 
-## 🔹 STEP 3 — Attach Volume to EC2
+## STEP 3 — Attach Volume to EC2
 
 1. Select your volume → **Actions → Attach Volume**  
 2. Choose your EC2 instance  
 3. Device: `/dev/sdf` (Linux)  
 
-📸 Screenshot 3: Volume attached  
+Volume attached  
 ![Volume Attached](Images/ebs-attached.png)
 
 can see and manage it inside EC2 → EBS → Volumes in the AWS Console storage
@@ -54,13 +54,13 @@ can see and manage it inside EC2 → EBS → Volumes in the AWS Console storage
 ![ebs-storage-gui](Images/ebs-storage-gui.png)
 ---
 
-## 🔹 STEP 4 — Connect via SSH
+## STEP 4 — Connect via SSH
 
 ```bash
 ssh -i devops-key.pem ec2-user@<PUBLIC-IP>
 ```
 
-## 🔹 STEP 5 — Mount Volume
+## STEP 5 — Mount Volume
 ```
 # List devices
 lsblk
@@ -80,7 +80,7 @@ df -h
 ![ebs-mounted](Images/ebs-mounted.png)
 
 
-## 🔹 STEP 6 — Add Test File
+## STEP 6 — Add Test File
 
 ```
 cd /mnt/ebs
@@ -89,19 +89,18 @@ ls -l
 ```
 ![ebs-test-file](Images/ebs-test-file.png)
 
-## 🔹 STEP 7 — Take Snapshot
+## STEP 7 — Take Snapshot
 
 Go to EC2 → Volumes → Select Volume → Actions → Create Snapshot
 
 ![snapshot](Images/ebs-snapshot.png)
 
-## 🔹 STEP 8 — Detach & Reattach Volume
+## STEP 8 — Detach Volume
 
-```bash
-Instance → Actions → Detach Volume
-Reattach to same or new EC2 → /dev/sdf
-Mount again:
-```
+* Instance → Actions → Detach Volume
+* Reattach to same or new EC2 → /dev/sdf
+* Mount again:
+
 ![Detach_Volume](Images/Detach_Volume.png)
 
 **Reattach Volume**
@@ -111,5 +110,10 @@ ls -l /mnt/ebs
 ```
 ![ebs-file-persist](Images/ebs-file-persist.png)
 
+---
+**Outcome**
 
+* Created and attached EBS volume to EC2
+* Mounted volume and verified file storage
+* Took snapshot and verified persistence after detach/reattach
 
