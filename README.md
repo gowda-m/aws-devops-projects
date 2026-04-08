@@ -1,4 +1,4 @@
-# 🚀 AWS DevOps Projects Repository
+#  AWS DevOps Projects Repository
 
 ---
 
