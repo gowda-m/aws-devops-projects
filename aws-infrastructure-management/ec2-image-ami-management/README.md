@@ -6,7 +6,7 @@
 
 This project demonstrates how to:
 
-* Create an AMI (Amazon Machine Image) from an EC2 instance
+* Create AMI (Amazon Machine Image) from EC2 instance
 * Launch a new EC2 instance using the AMI
 * Verify data and configuration cloning
 
@@ -17,7 +17,7 @@ This represents **real-world use cases** like backup, scaling, and environment r
 ## Services Used
 
 * AWS EC2
-* AMI (Amazon Machine Image)
+* AMI
 * Security Groups
 * SSH
 
