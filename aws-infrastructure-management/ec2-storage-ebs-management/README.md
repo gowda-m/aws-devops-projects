@@ -1,4 +1,4 @@
-# EC2 Storage — EBS Management
+# EC2 Storage — EBS Management topic
 
 ---
 
@@ -88,7 +88,7 @@ ls -l
 
 ## STEP 7 — Take Snapshot
 
-Go to EC2 → Volumes → Select Volume → Actions → Create Snapshot
+Go to EC2 → Volumes → Create Snapshot
 
 ![snapshot](Images/ebs-snapshot.png)
 
@@ -112,5 +112,5 @@ ls -l /mnt/ebs
 
 * Created and attached EBS volume to EC2
 * Mounted volume and verified file storage
-* Took snapshot and verified persistence after detach/reattach
+* Took snapshot and verified persistence after detach
 
